@@ -20,7 +20,7 @@
     }
     .line{
         position: absolute;
-        height: 100px;
+        height: 90px;
         width: 10px;
         margin-left: 150px;
         background-color: white;
@@ -44,8 +44,21 @@
         document.addEventListener("keydown",pressOn);
         document.addEventListener("keyup",pressOff);    
 
+        function moveLines(){
+            let lines = document.querySelectorAll(".line");
+            lines.forEach(function(item){
+                //console.log(item.y);
+                if(item.y>=950){
+                    item.y = -160;
+                }
+                item.y += player.speed;
+                item.style.top = item.y + "px";
+            })
+        }
+
         function playGame(){
             let car = document.querySelector(".car");
+            moveLines();
             let road = gameArea.getBoundingClientRect();
             //get all  related coordinates of game Area
             
@@ -64,10 +77,11 @@
             startScreen.classList.add("hide");
             gameArea.classList.remove("hide");
             player.start=true;
-            for(let x=0;x<5;x++){
+            for(let x=0;x<8;x++){
                 let div = document.createElement("div");
                 div.classList.add("line");
-                div.style.top = (x*150)+"px";
+                div.y=x * 162;
+                div.style.top = (div.y)+"px";
                 gameArea.appendChild(div);
             }
             window.requestAnimationFrame(playGame);
