@@ -2,7 +2,7 @@
     .hide{
         display:none;
     }
-    .car{
+    .car, .enemy{
         position: absolute;
         bottom: 100px;
         margin:auto;
@@ -37,7 +37,7 @@
         const startScreen = document.querySelector(".startScreen");
         const gameArea = document.querySelector(".gameArea");
 
-        let player={speed:5};
+        let player={speed:7};
         let keys = {ArrowUp:false, ArrowDown:false, ArrowRight:false,ArrowLeft:false};
 
         startScreen.addEventListener("click",start);
@@ -51,6 +51,18 @@
                 if(item.y>=950){
                     item.y = -160;
                 }
+                item.y += player.speed/3;
+                item.style.top = item.y + "px";
+            })
+        }
+        function moveEnemy(){
+            let ele = document.querySelectorAll(".enemy");
+            ele.forEach(function(item){
+                //console.log(item.y);
+                if(item.y>=950){
+                    item.y = -700;
+                    item.style.left = Math.floor(Math.random()*250)+"px";
+                }
                 item.y += player.speed;
                 item.style.top = item.y + "px";
             })
@@ -59,6 +71,7 @@
         function playGame(){
             let car = document.querySelector(".car");
             moveLines();
+            moveEnemy();
             let road = gameArea.getBoundingClientRect();
             //get all  related coordinates of game Area
             
@@ -91,6 +104,15 @@
             gameArea.appendChild(car);
             player.x=car.offsetLeft;
             player.y=car.offsetTop;
+            for(let x=0;x<3;x++){
+                let enemy = document.createElement("div");
+                enemy.classList.add("enemy");
+                enemy.y=((x+1)*600)*-1;
+                enemy.style.left = Math.floor(Math.random()*150)+"px";
+                enemy.style.top = enemy.y+"px";
+                enemy.style.backgroundColor = "red";
+                gameArea.appendChild(enemy);
+            }
         }
         function pressOn(e){
             e.preventDefault(); //prevent default action of that key
