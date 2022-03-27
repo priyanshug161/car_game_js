@@ -46,7 +46,14 @@
         font-family: fantasy;
     }
     .startScreen{
+        position: absolute;
+        background-color: red;
+        left: 39%;
+        top: 100px;
+        color: white;
+        z-index: 1;
         text-align: center;
+        font-family: sans-serif;
         border: 1px solid red;
         padding: 15px;
         margin: auto;
@@ -67,6 +74,7 @@
         let player={speed:15, score:0};
         let keys = {ArrowUp:false, ArrowDown:false, ArrowRight:false,ArrowLeft:false};
 
+        startScreen.style.left=gameArea.offsetLeft+ 40;
         startScreen.addEventListener("click",start);
         document.addEventListener("keydown",pressOn);
         document.addEventListener("keyup",pressOff);    
